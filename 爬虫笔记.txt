@@ -1,0 +1,195 @@
+get函数常用方法：
+1.get(url,params=params,headers=headers，vertify=Flse)
+	参数：	url 
+			params 参数：字典格式{"wd"="python"}
+			headers 头
+2.post(url,data=data,headers=headers)
+
+代理：主要原因是在短时间访问多次，极有可能被服务器封IP
+获取代理的网站：快代理，西刺代理，全网代理
+普通代理的使用：
+proxies={"协议":IP地址：端口号}
+proxies={"HTTPS":171.83.165.201:9999}
+
+私密代理使用：
+proxies = {"http":"http://用户名：密码@IP地址：端口号"}
+
+web客户端验证：auth
+auth = ("用户名"，"密码")
+
+
+处理SSLError
+SSL证书：verify
+1.verify=True  #默认，做SSL证书认证
+2.verify=False #忽略安全证书认证，早期的12306网站存在这个问题。
+
+XPATH的返回都是列表
+找寻节点：
+@的使用：
+1.选取1个节点：//title[@lang='en']
+2.选取N个节点：//title[@lang]
+
+3.选取节点属性值：//title/@lang
+
+4.获取节点内容：
+r_list = //a  获取到对象
+for r in r_list:
+	print(r.text)
+
+匹配多路径：
+匹配所有的book节点下的title节点，或者price节点，返回值是一个列表
+1.符号：//book/title | //book/price
+XPATH也支持一些函数：
+contains():匹配一个属性值中包含某些字符串的节点。
+//title[contains(@lang,'e')]
+
+解析html源码：
+1.xml库:HTML/XML
+安装xml
+conda install lxml
+pip install lxml
+
+使用流程：
+导入：
+import lxml
+
+1.利用lxml库的etree 创建解析对象
+2.解析对象调用xpath工具去定位节点信息，获取属性值等。
+
+from lxml import etree
+parseHTML = etree.HTML(html)
+r_list = parseHTML.xpath('//title[@lang="en"]')
+
+私密代理管理器：
+ProxyBasicAuthHandler
+urllib.request.ProxyBasicAuthHandler(密码管理器对象)
+
+使用流程：
+1.创建密码管理器对象
+pwd = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+pwd.add_password(None,"IP:端口"，"用户名"，"密码")
+2.添加私密代理用户名，密码，IP地址，端口等信息。
+
+
+AJAX动态加载的网页如何爬取（鼠标滚动或者点击）
+
+案例：豆瓣电源TOP100
+
+1.抓包找到AJAX的请求url，Filder里面的raw
+2.查找并拼接参数，Filder里面的WebForm
+
+json模块：
+将json格式的数据类型转换成python的数据类型
+常用的方法：
+json.loads()  #将json格式的数据类型转换成python 类型
+json.dumps()  #将python的数据类型转换成json格式的数据类型
+
+selenium:
+定义：web自动化测试工具，引用于web自动化测试。
+特点：
+	可以运行在浏览器上。根据指令来操作浏览器。让浏览器加载页面或者触发点击。
+	只是一个工具，不支持浏览器功能，只有与第三方浏览器结合才会发挥作用
+	
+phantomjs（无头浏览器）--经常因为网络慢出现找不到元素的情况，真是日了狗了。
+	1.定义：无界面浏览器，在内存中加载界面。
+	2.特点：
+		1.将网站加载到内存中，执行页面加载
+		2.运行高效
+	3.安装:
+		win:1.官网下载，放在python的Script文件夹下
+		linux:1.官网下载。
+		vi .bashrc
+		export PHANTOM_JS=/home/.../phantomjs-...（安装包所在路径）
+		export PATH=$PHANTOM_JS/bin:$PATH
+		source .bashrc
+		终端：phantomjs，成功
+		
+	4.常用方法：
+		1.drive.get(url)
+		2.drive.page_source.find("内容") #从html源码中找茬是否有...内容，成功返回非-1，不成功返回-1
+		3.driver.find_element_by_id('属性值')。text  得到的是一个对象，
+		5.对象名.click()
+		4.driver.quit()
+		
+bs4使用：
+from bs4 import BeautifulSoup as bs
+#创建解析对象
+soup = bs(html,'lxml')
+
+BeautifulSoup支持的解析库：
+1. lxml HTML解析库    lxml:速度快，文档容错率高
+2. Python标准库       'html.parser' 速度一般
+3. lxml XML解析库     'xml' 速度快
+
+
+哈希算法：
+	对一段信息通过一个数学方式打指纹生成的值是相等的，打完指纹的信息得到的长度是固定的（跟信息的长度无关）。
+	MD5已经过时了。
+	同一字符串每次的结果是相同的
+	
+	常用的hash算法：md5()(32位),sha256()(64位),
+	
+sitemap:用xml格式写的
+
+builtwith:评估网站使用了何种技术：
+使用方法：
+import builtwith
+builtwith.parse("www.baidu.com")
+
+宽度优先策略：
+	使用队列来实现
+	一次性将同一层次的网页全部访问一遍
+	
+广度优先策略：使用递归来实现
+	
+	
+二叉树：最多出现两个枝杈，如果有不满足的情况，将不完全的节点尽量放在左边
+ 
+	
+python中的list使用数组实现：
+时间复杂度：每一次操作被认为是一个时间复杂度
+数组和链表的区别：
+	数组：可以使用下表索引，访问元素快，修改数据慢
+	链表：不能使用下标访问，修改数据快
+	
+爬虫的步骤：
+	1.设置种子站点、宽度、深度。
+	2.生成一个队列来记录所有已经完成下载的url,目的是去重，防止反复爬取
+	3.实现一个函数，来取得当前url的内容及所有的外链
+	4.递归调用该函数，遍历整个网站。
+	5.错误处理和日志记录
+	
+正则表达式：
+	难的不是如何匹配到数据，而是剔除不要的数据
+万能正则表达式：
+	[\s\S]*?结合findall(),不是真正的懒惰，实际上是小步快跑的非贪婪，但是会匹配晚所有信息；控制好开始和结束
+	使用：
+		开始([/s/S]*?)结束
+		
+GIL思考：
+1.无论计算机中有几个线程，只能有一个运行（GIL），线程在多个CPU之间切换，当当前CPU执行线程时，其他CPU只能闲置等待，而不能执行其他线程，造成CPU多核资源浪费。
+2.解决办法：更换解释器，或者用c重写python创建线程的创建
+3.python性能不够的地方可以用c语言重写（如numpy,lxml）
+
+线程是一个轻量级的进程，协程是一个轻量级的线程序；
+协程会记录当前函数调用的位置和状态信息，然后CPU的时间片转让给上一层调用；
+
+开启mysql 服务：
+sudo service mysql start
+
+
+写逻辑代码的时候，先写不成立的情况
+
+
+1.创建scrapy工程：
+scrapy startproject mySpider
+生成一个爬虫：
+scrapy genspider itcast 'itcast.cn'
+
+2.提取数据：
+完善spider,使用xpath等方法提取数据
+提取完数据常用yeild关键字将当前函数编程一个生成器返回。方便后面的函数获取数据
+
+3.保存数据：
+pipeline中保存数据，数据管道有先后，可以先经过一个管道处理一些数据，再return 数据给下一个管道。
+先经过距离引擎近的管道

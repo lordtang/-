@@ -1,0 +1,56 @@
+爬取数据的步骤：
+	1.确定要爬取的URL地址
+	2.通过HTTP/S协议获取html页面
+	3.提取需要的数据
+	
+Fidder抓包工具
+	1.抓包设置
+		1.设置F抓包工具，
+		2.设置浏览器代理
+		
+Spiser常用快捷键
+	1.注释、取消注释
+	ctrl + 1
+	运行：F5
+	自动补全tab
+	
+在Fiddler中可以看到抓取的POST的参数
+
+一些浏览器参数：
+	User-agent:
+	为了让用户获取更好的html效果
+	
+爬虫常用的模块：
+	1.urllib.request
+	1.版本：python2中：urllib urllib2
+	
+		python3中，两者合并了，叫urllib.request
+		
+	2.常用方法：
+		1. retObj = urllib.request.urlopen('url')
+		2.retObj.read()
+		
+	urllib.request.Request(url,headers={})
+	1.重构user-agent,反爬虫的第一步
+	2.步骤：
+		1.构建请求对象：request = Request()构建（传参）请求对象
+		2.获取响应对象：response = urlopen(request)
+		3.读取响应对象: response.read().decode('utf-8')
+		
+		
+####urllib.parse模块：
+	用来给url进行编码
+	1.quote("中文字符串")
+		
+	2.	ke_dict = {"kw":"参数"}
+		urlencode(kw_dict)
+		
+	给url解码：
+	1.unquote("编码之后的字符")
+	
+	
+####爬取数据的步骤：
+	1.找到url的规律，拼接url
+	2.获取响应的内容
+	3.保存到本地或者数据库
+		
